@@ -26,9 +26,9 @@ nohup gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app >/var/log/mntproj/gun
 ```
 
 View in a browser running with Flask:
-http://127.0.0.1:5000/  
+[http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 View in a browser running with Gunicorn:
-http://127.0.0.1:8000/
+[http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ### Run as a script
 
@@ -53,21 +53,18 @@ suzy-bishop: 000000002
 cd mntproj-compare
 ```
 
-Create virtual env and install dependencies:
+Use any of the following to install dependencies.
+
+Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
+```shell script
+pip install -r requirements.txt
+```
+
+Anaconda can also be used to create a virtual environment.
+
+Create virtual environment and install dependencies from [Pipfile.lock](Pipfile.lock):
 ```shell script
 pipenv install
-```
-
-Create tick list directory and cache file:
-```shell script
-echo '{}' > all_route_ticks.json
-mkdir user_tick_csv
-```
-
-Create log directory:
-```shell script
-sudo mkdir /var/log/mntproj
-sudo chown YOUR_USER /var/log/mntproj
 ```
 
 ### Notes
@@ -75,5 +72,3 @@ sudo chown YOUR_USER /var/log/mntproj
 This calls a Mountain Project API, you may receive HTTP response status code 429 (Too Many Requests) based on the rate limiting.
 
 Compare two Mountain Project tick lists: [compare_csv.py](compare_csv.py)
-
-To do items: [to-do.txt](to-do.txt)

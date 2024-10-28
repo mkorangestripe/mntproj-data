@@ -30,12 +30,10 @@ from constants import MNTPROJ_USER_IDS_FILE, ALL_ROUTE_TICKS_FILE
 from constants import MNT_PROJ_BASE_URL, API_V2_ROUTES
 from constants import TIMESTAMP_STR_FORMAT
 from constants import LOG_DIR , LOG_FILE_SCRAPE_MNTPROJ, LOG_FORMAT
+from constants import CHECK_MP_LIMIT_MINS, SAME_ROUTE_MAX_LIMIT
 from common_functions import get_csv_file
 
 GET_USER_CSV = True
-CHECK_MP_LIMIT_MINS = 5  # 60, 1440, 10080
-ROUTE_CACHE_LIM_MIN = 43800
-SAME_ROUTE_MAX_LIMIT = 50
 
 # LOG_LEVEL = logging.DEBUG
 LOG_LEVEL = logging.INFO
