@@ -29,7 +29,7 @@ from constants import MNTPROJ_USER_IDS_FILE, USER_TICK_CSV_DIR, ALL_ROUTE_TICKS_
 from constants import LOG_DIR , LOG_FILE_COMPARE_CSV, LOG_FORMAT
 
 LOG_LEVEL = logging.INFO
-LOG_FILE = LOG_DIR + LOG_FILE_COMPARE_CSV
+LOG_FILE = f"{LOG_DIR}/{LOG_FILE_COMPARE_CSV}"
 
 if __name__ == "__main__":
 

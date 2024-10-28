@@ -12,7 +12,7 @@ from scrape_mntproj import start_scrape_mntproj
 LOG_LEVEL = logging.INFO
 # LOG_LEVEL = logging.WARNING
 
-LOG_FILE = LOG_DIR + LOG_FILE_FLASK_APP
+LOG_FILE = f"{LOG_DIR}/{LOG_FILE_FLASK_APP}"
 
 logging.basicConfig(filename=LOG_FILE, level=LOG_LEVEL, format=LOG_FORMAT)
 logging.info("Starting Mountain Project Data Analyzer")

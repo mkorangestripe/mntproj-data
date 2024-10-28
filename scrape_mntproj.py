@@ -39,7 +39,7 @@ GET_USER_CSV = True
 LOG_LEVEL = logging.INFO
 # LOG_LEVEL = logging.WARNING
 
-LOG_FILE = LOG_DIR + LOG_FILE_SCRAPE_MNTPROJ
+LOG_FILE = f"{LOG_DIR}/{LOG_FILE_SCRAPE_MNTPROJ}"
 
 class ScrapeMntProj:
     """Compare users in Mountain Project route tick lists"""

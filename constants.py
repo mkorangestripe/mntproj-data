@@ -14,7 +14,7 @@ TIMESTAMP_STR_FORMAT = '%Y-%m-%d %H:%M:%S'
 LOG_FORMAT = '%(asctime)-15s %(levelname)s %(message)s'
 # LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-# LOG_DIR = '/var/log/mntproj/'
+# LOG_DIR = '/var/log/mntproj'
 LOG_DIR = 'logs'
 LOG_FILE_SCRAPE_MNTPROJ = 'scrape_mntproj.log'
 LOG_FILE_FLASK_APP = 'app.log'
