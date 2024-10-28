@@ -30,6 +30,8 @@ View in a browser running with Flask:
 View in a browser running with Gunicorn:
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
+The UID/name can be submitted on the page or with a query string.
+
 ### Run as a script
 
 Example usage, 2nd arg is cached data limit in minutes:
@@ -41,7 +43,7 @@ python scrape_mntproj.py thomas-anderson 60
 Options:  
 -n Try to use cached user's csv file
 
-The UID/name must be present in [mntproj_user_ids.yaml](mntproj_user_ids.yaml), example:
+Create mntproj_user_ids.yaml and add UID/names, example:
 ```yaml
 thomas-anderson: 123456789
 suzy-bishop: 000000002
@@ -50,7 +52,7 @@ suzy-bishop: 000000002
 ### Setup
 
 ```shell script
-cd mntproj-compare
+cd mntproj-data
 ```
 
 Use any of the following to install dependencies.
@@ -67,10 +69,9 @@ pipenv install
 
 * Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
 
-Create the json cache file and UID/name file if not present:
+Create the json cache file if not present:
 ```shell script
 echo '{}' > all_route_ticks.json
-echo '---' > mntproj_user_ids.yaml
 ```
 
 ### Notes
