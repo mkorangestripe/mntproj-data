@@ -60,14 +60,14 @@ Use any of the following to install dependencies.
 pip install -r requirements.txt
 ```
 
-* Create virtual environment and install dependencies from [Pipfile.lock](Pipfile.lock):
+* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present:
 ```shell script
 pipenv install
 ```
 
-* Anaconda can also be used to create a virtual environment.
+* Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml).
 
-Create cache file if doesn’t exist:
+Create the cache file if not present:
 ```shell script
 echo '{}' > all_route_ticks.json
 ```
