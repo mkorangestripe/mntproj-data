@@ -1,0 +1,7 @@
+---
+dependencies:
+  - flask
+  - gunicorn
+  - pandas
+  - PyYaml
+  - requests

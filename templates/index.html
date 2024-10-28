@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Project Data Analyzer</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            background-color: white;
+        }
+
+        .input_box {
+            max-width: 600px;
+            margin: auto;
+            /* border: 1px solid lightgray; */
+            padding: 20px;
+        }
+
+        .content {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            background-color: rgb(235, 235, 234);
+            padding: 20px;
+        }
+
+        .mpda_graph {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .svg-large {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Mountain Project Data Analyzer</h1>
+    <div class="input_box">
+        <form method="POST">
+            <input type="text" name="input_field" style="width: 200px" placeholder="UID/name" maxlength="101" required>
+            <button type="submit" id="submitButton">Submit</button>
+            <p id="submit_message"></p>
+        </form>
+    </div>
+    <div class="content">
+        From <a href="https://www.mountainproject.com/" target="_blank">Mountain Project</a> go to your profile (or any)
+        and copy the UID/name from the address.<br><br>
+        <font size="2" color="gray">Example:</font>
+        https://www.mountainproject.com/user/<b>123456789/thomas-anderson</b><br><br>
+        Find other users with the most similar tick lists.
+    </div><br>
+    <div class="mpda_graph">
+        <img src="static/mpda.svg" alt="MPDA graph" class="svg-large">
+    </div>
+    <script>
+        document.getElementById("submitButton").onclick = function() {
+            document.getElementById("submit_message").innerText = "Working, this may take a few minutes";
+        };
+    </script>
+</body>
+
+</html>

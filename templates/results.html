@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+</head>
+
+<body>
+    <a href="/">Back</a><br><br>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Total</th>
+            <th>Percent</th>
+        </tr>
+        {% for result in results %}
+        {% set result_split = result.split(',') %}
+        {% set name = result_split[0] %}
+        {% set total = result_split[1] %}
+        {% set percent = result_split[2] %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ total }}</td>
+            <td>{{ percent }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
