@@ -55,16 +55,21 @@ cd mntproj-compare
 
 Use any of the following to install dependencies.
 
-Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
+* Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
 ```shell script
 pip install -r requirements.txt
 ```
 
-Anaconda can also be used to create a virtual environment.
-
-Create virtual environment and install dependencies from [Pipfile.lock](Pipfile.lock):
+* Create virtual environment and install dependencies from [Pipfile.lock](Pipfile.lock):
 ```shell script
 pipenv install
+```
+
+* Anaconda can also be used to create a virtual environment.
+
+Create cache file if doesn’t exist:
+```shell script
+echo '{}' > all_route_ticks.json
 ```
 
 ### Notes
