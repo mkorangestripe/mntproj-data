@@ -67,9 +67,10 @@ pipenv install
 
 * Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
 
-Create the cache file if not present:
+Create the json cache file and UID/name file if not present:
 ```shell script
 echo '{}' > all_route_ticks.json
+echo '---' > mntproj_user_ids.yaml
 ```
 
 ### Notes
