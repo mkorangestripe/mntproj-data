@@ -26,7 +26,7 @@ nohup gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app >/var/log/mntproj/gun
 ```
 
 View in a browser running with Flask:
-[http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+[http://127.0.0.1:5000/](http://127.0.0.1:5000/)  
 View in a browser running with Gunicorn:
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
@@ -65,7 +65,7 @@ pip install -r requirements.txt
 pipenv install
 ```
 
-* Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml).
+* Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
 
 Create the cache file if not present:
 ```shell script
