@@ -14,15 +14,18 @@ conda activate envs/mntproj_py3.12.7  # using Anaconda
 
 Start using Flask:
 ```shell script
-python app
+python app.py
 ```
 
-Start using Gunicorn:  
+Start using Gunicorn (use the first command if not familiar with nohup):  
 Set the number of workers to (number of CPU cores x 2) + 1
+
 ```shell script
 gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app
-nohup gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app >/var/log/mntproj/gunicorn.log 2>&1 <&- &
+```
 
+```shell script
+nohup gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app >/var/log/mntproj/gunicorn.log 2>&1 <&- &
 ```
 
 View in a browser running with Flask:
@@ -69,10 +72,6 @@ pipenv install
 
 * Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
 
-Create the json cache file if not present:
-```shell script
-echo '{}' > all_route_ticks.json
-```
 
 ### Notes
 
