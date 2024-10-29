@@ -56,9 +56,12 @@ class ScrapeMntProj:
         try:
             with open(self.route_user_data_file, encoding='utf-8') as open_cached_data_file:
                 return json.load(open_cached_data_file)
-        except (FileNotFoundError, PermissionError, JSONDecodeError) as err:
+        except (PermissionError, JSONDecodeError) as err:
             logging.critical(err)
             sys.exit(1)
+        except FileNotFoundError:
+            logging.error("%s not found, creating empty object", ALL_ROUTE_TICKS_FILE)
+            return {}
 
     def dump_cached_data(self):
         """Dump cached route data"""
@@ -203,7 +206,7 @@ class ScrapeMntProj:
         return route_ticks_data, route_ticks_total, update_last_checked_timestamp_only
 
 
-def start_scrape_mntproj(mntproj_user_id, mntproj_user_name):
+def start_scrape_mntproj(mp_uid, mp_name):
     "Start everything, get user's csv file and ticks from each route."
 
     start_time = datetime.now().timestamp()
@@ -211,8 +214,8 @@ def start_scrape_mntproj(mntproj_user_id, mntproj_user_name):
     logging.info("Creating session")
     session = requests.Session()
 
-    user_csv_file = f"{USER_TICK_CSV_DIR}/{mntproj_user_name}_{mntproj_user_id}_ticks.csv"
-    get_csv_file(mntproj_user_id, mntproj_user_name, session, user_csv_file, GET_USER_CSV)
+    user_csv_file = f"{USER_TICK_CSV_DIR}/{mp_name}_{mp_uid}_ticks.csv"
+    get_csv_file(mp_uid, mp_name, session, user_csv_file, GET_USER_CSV)
 
     logging.info("Creating dataframe from %s", user_csv_file)
     df = pd.read_csv(user_csv_file)
@@ -226,7 +229,7 @@ def start_scrape_mntproj(mntproj_user_id, mntproj_user_name):
     routes_total = len(route_urls)
     for route_url_i in range(routes_total):
         route_url = route_urls[route_url_i]
-        running_count_url = f"{route_url_i + 1}/{routes_total} {mntproj_user_name}:{mntproj_user_id} {route_url}"
+        running_count_url = f"{route_url_i + 1}/{routes_total} {mp_name}:{mp_uid} {route_url}"
         logging.info(running_count_url)
         try:
             _,_,_,_, route_id_from_url, route_name_from_url = route_url.split('/')
@@ -270,7 +273,10 @@ def start_scrape_mntproj(mntproj_user_id, mntproj_user_name):
 
     logging.info("Printing users, shared route counts, and percentages")
     results = []
-    user_route_total = user_counts[str(mntproj_user_id)]["same_route_count"]
+    try:
+        user_route_total = user_counts[str(mp_uid)]["same_route_count"]  # json cache file was loaded
+    except KeyError:
+        user_route_total = user_counts[mp_uid]["same_route_count"]  # empty object was created
     for user_i in range(len(sorted_user_list)):
         name, same_route_count = sorted_user_list[user_i]
         if user_i + 1 > SAME_ROUTE_MAX_LIMIT:
@@ -281,7 +287,7 @@ def start_scrape_mntproj(mntproj_user_id, mntproj_user_name):
 
     end_time = datetime.now().timestamp()
     runtime = end_time - start_time
-    logging.info("Mountain Project scraper finished for %s in %.2f seconds", mntproj_user_name, runtime)
+    logging.info("Mountain Project scraper finished for %s in %.2f seconds", mp_name, runtime)
 
     return results
 
@@ -292,7 +298,7 @@ if __name__ == "__main__":
         print(__doc__)
         sys.exit(2)
 
-    mntproj_user_name = sys.argv[1]
+    mntproj_name = sys.argv[1]
 
     if len(sys.argv) > 2:
         try:
@@ -309,7 +315,7 @@ if __name__ == "__main__":
         LOG_FILE = f"logs/{LOG_FILE_SCRAPE_MNTPROJ}"
 
     logging.basicConfig(filename=LOG_FILE, level=LOG_LEVEL, format=LOG_FORMAT)
-    logging.info("Starting Mountain Project scraper for %s", mntproj_user_name)
+    logging.info("Starting Mountain Project scraper for %s", mntproj_name)
     logging.info("Python version: %s", sys.version)
 
     logging.info("Opening %s",  MNTPROJ_USER_IDS_FILE)
@@ -320,8 +326,8 @@ if __name__ == "__main__":
         logging.critical(err)
         sys.exit(1)
 
-    mntproj_user_id = mntproj_user_ids[mntproj_user_name]
+    mntproj_uid = mntproj_user_ids[mntproj_name]
 
-    mp_scrape_results = start_scrape_mntproj(mntproj_user_id, mntproj_user_name)
+    mp_scrape_results = start_scrape_mntproj(mntproj_uid, mntproj_name)
     for result in mp_scrape_results:
         print(result)
