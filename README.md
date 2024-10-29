@@ -17,14 +17,14 @@ Start using Flask:
 python app.py
 ```
 
-Start using Gunicorn (use the first command if not familiar with nohup):  
+Start using Gunicorn:  
 Set the number of workers to (number of CPU cores x 2) + 1
 
 ```shell script
+# For shorter runs:
 gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app
-```
 
-```shell script
+# Run in background:
 nohup gunicorn -w 3 -b 0.0.0.0:8000 --timeout 1800 app:app >/var/log/mntproj/gunicorn.log 2>&1 <&- &
 ```
 
