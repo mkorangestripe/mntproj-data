@@ -42,10 +42,10 @@ The UID/name can be submitted on the page or with a query string.
 
 ### Run as a script
 
-Example usage, 2nd arg is cached data limit in minutes:
+Example usage:
 ```shell script
 python scrape_mntproj.py thomas-anderson
-python scrape_mntproj.py thomas-anderson 60
+python scrape_mntproj.py thomas-anderson 60  # use cached routes newer than 60 min
 ```
 
 Options:  

@@ -1,7 +1,7 @@
 """Constants for mntproj-compare scripts"""
 
 MNTPROJ_USER_IDS_FILE = 'mntproj_user_ids.yaml'
-ALL_ROUTE_TICKS_FILE = 'all_route_ticks.json'
+ROUTE_TICKS_CACHE_FILE = 'route_ticks_cache.json'
 
 MNT_PROJ_BASE_URL = "https://www.mountainproject.com"
 API_V2_ROUTES = "api/v2/routes"

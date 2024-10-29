@@ -26,7 +26,7 @@ import requests
 import yaml
 
 from constants import USER_TICK_CSV_DIR
-from constants import MNTPROJ_USER_IDS_FILE, ALL_ROUTE_TICKS_FILE
+from constants import MNTPROJ_USER_IDS_FILE, ROUTE_TICKS_CACHE_FILE
 from constants import MNT_PROJ_BASE_URL, API_V2_ROUTES
 from constants import TIMESTAMP_STR_FORMAT
 from constants import LOG_DIR , LOG_FILE_SCRAPE_MNTPROJ, LOG_FORMAT
@@ -44,31 +44,31 @@ LOG_FILE = f"{LOG_DIR}/{LOG_FILE_SCRAPE_MNTPROJ}"
 class ScrapeMntProj:
     """Compare users in Mountain Project route tick lists"""
 
-    def __init__(self, route_user_data_file, session) -> None:
+    def __init__(self, route_ticks_cache_file, session) -> None:
         self.date_time_now = datetime.now()
-        self.route_user_data_file = route_user_data_file
-        self.route_user_cached_data = self.load_cached_data()
+        self.route_ticks_cache_file = route_ticks_cache_file
+        self.route_ticks_cached_data = self.load_cached_data()
         self.route_user_data = {}
         self.session = session
 
     def load_cached_data(self):
         """Load cached route data"""
         try:
-            with open(self.route_user_data_file, encoding='utf-8') as open_cached_data_file:
+            with open(self.route_ticks_cache_file, encoding='utf-8') as open_cached_data_file:
                 return json.load(open_cached_data_file)
         except (PermissionError, JSONDecodeError) as err:
             logging.critical(err)
             sys.exit(1)
         except FileNotFoundError:
-            logging.error("%s not found, creating empty object", ALL_ROUTE_TICKS_FILE)
+            logging.error("%s not found, creating empty object", ROUTE_TICKS_CACHE_FILE)
             return {}
 
     def dump_cached_data(self):
         """Dump cached route data"""
         try:
-            with open(self.route_user_data_file, 'w', encoding='utf-8') as open_cached_data_file:
-                # json.dump(self.route_user_cached_data, open_cached_data_file, indent=4)  # use to make human readable
-                json.dump(self.route_user_cached_data, open_cached_data_file)
+            with open(self.route_ticks_cache_file, 'w', encoding='utf-8') as open_cached_data_file:
+                # json.dump(self.route_ticks_cached_data, open_cached_data_file, indent=4)  # use to make human readable
+                json.dump(self.route_ticks_cached_data, open_cached_data_file)
         except (FileNotFoundError, PermissionError) as err:
             logging.error(err)
             logging.error("Not saving new route data")
@@ -91,18 +91,18 @@ class ScrapeMntProj:
                                                   "user_ticks": {}}
             self.route_user_data[route_id]["user_ticks"][user_id2] = name2
 
-        if self.route_user_cached_data.get(route_id) is None:
-            self.route_user_cached_data[route_id] = self.route_user_data[route_id]
+        if self.route_ticks_cached_data.get(route_id) is None:
+            self.route_ticks_cached_data[route_id] = self.route_user_data[route_id]
         else:
-            self.route_user_cached_data[route_id]["last_total_mp"] = route_ticks_total
-            self.route_user_cached_data[route_id]["cache_last_updated"] = timestamp
-            self.route_user_cached_data[route_id]["mp_last_checked"] = timestamp
+            self.route_ticks_cached_data[route_id]["last_total_mp"] = route_ticks_total
+            self.route_ticks_cached_data[route_id]["cache_last_updated"] = timestamp
+            self.route_ticks_cached_data[route_id]["mp_last_checked"] = timestamp
 
             for user_tick in self.route_user_data[route_id]["user_ticks"]:
                 user_tick_key_str = str(user_tick)
                 user_tick_value = self.route_user_data[route_id]["user_ticks"][user_tick]
                 user_tick_k_v = {user_tick_key_str:user_tick_value}
-                self.route_user_cached_data[route_id]["user_ticks"].update(user_tick_k_v)
+                self.route_ticks_cached_data[route_id]["user_ticks"].update(user_tick_k_v)
 
         logging.debug(self.route_user_data[route_id]["user_ticks"])
 
@@ -115,10 +115,10 @@ class ScrapeMntProj:
         # route_cache_limit = timedelta(minutes=ROUTE_CACHE_LIM_MIN)
 
         mp_last_checked = self.date_time_now + check_mp_time_limit
-        if self.route_user_cached_data.get(route_id) and\
-        self.route_user_cached_data[route_id].get("mp_last_checked"):
+        if self.route_ticks_cached_data.get(route_id) and\
+        self.route_ticks_cached_data[route_id].get("mp_last_checked"):
             try:
-                mp_last_checked = datetime.strptime(self.route_user_cached_data[route_id]["mp_last_checked"], TIMESTAMP_STR_FORMAT)
+                mp_last_checked = datetime.strptime(self.route_ticks_cached_data[route_id]["mp_last_checked"], TIMESTAMP_STR_FORMAT)
                 if self.date_time_now - mp_last_checked < check_mp_time_limit:
                     logging.info("Mountain Project last checked within time limit, using cached data")
                     return
@@ -132,7 +132,7 @@ class ScrapeMntProj:
             self.cache_route_user_data(route_id, route_name, route_ticks_total, route_ticks_data)
         else:
             logging.info("Updating last checked timestamp only, route/%s", route_id)
-            self.route_user_cached_data[route_id]["mp_last_checked"] = self.date_time_now.strftime(TIMESTAMP_STR_FORMAT)
+            self.route_ticks_cached_data[route_id]["mp_last_checked"] = self.date_time_now.strftime(TIMESTAMP_STR_FORMAT)
             # self.dump_cached_data()
 
     def get_route_page(self, next_page_url):
@@ -186,8 +186,8 @@ class ScrapeMntProj:
                     sys.exit(1)
 
             if route_ticks_json.get("current_page") == 1 and\
-            self.route_user_cached_data.get(route_id) and\
-            route_ticks_json["total"] == self.route_user_cached_data[route_id]["last_total_mp"]:
+            self.route_ticks_cached_data.get(route_id) and\
+            route_ticks_json["total"] == self.route_ticks_cached_data[route_id]["last_total_mp"]:
                 logging.info("Route tick total same as cached, using cached data, route/%s", route_id)
                 update_last_checked_timestamp_only = True
                 break
@@ -197,8 +197,8 @@ class ScrapeMntProj:
             route_ticks_total = route_ticks_json['total']
 
             if route_ticks_json.get("current_page") == 1 and\
-            self.route_user_cached_data.get(route_id):
-                total_difference = route_ticks_json["total"] - self.route_user_cached_data[route_id]["last_total_mp"]
+            self.route_ticks_cached_data.get(route_id):
+                total_difference = route_ticks_json["total"] - self.route_ticks_cached_data[route_id]["last_total_mp"]
                 logging.info("Total difference: %s, route/%s", total_difference, route_id)
                 if 0 < total_difference <= ticks_per_page:
                     break
@@ -223,7 +223,7 @@ def start_scrape_mntproj(mp_uid, mp_name):
     logging.info("Removing duplicates routes from user's tick list")
     route_urls = df['URL'].drop_duplicates().reset_index(drop=True)
 
-    scrape_mnt_proj = ScrapeMntProj(ALL_ROUTE_TICKS_FILE, session)
+    scrape_mnt_proj = ScrapeMntProj(ROUTE_TICKS_CACHE_FILE, session)
 
     logging.info("Getting route ticks for all routes from either cached data or API")
     routes_total = len(route_urls)
@@ -251,12 +251,12 @@ def start_scrape_mntproj(mp_uid, mp_name):
             route_id_from_url = route_url.split('/')[4]
         except IndexError:
             continue
-        user_ids = scrape_mnt_proj.route_user_cached_data[route_id_from_url]['user_ticks']
+        user_ids = scrape_mnt_proj.route_ticks_cached_data[route_id_from_url]['user_ticks']
         for user_id in user_ids:
             if user_counts.get(user_id):
                 user_counts[user_id]["same_route_count"] = user_counts[user_id]["same_route_count"] + 1
             else:
-                name = scrape_mnt_proj.route_user_cached_data[route_id_from_url]['user_ticks'][user_id]
+                name = scrape_mnt_proj.route_ticks_cached_data[route_id_from_url]['user_ticks'][user_id]
                 user_counts[user_id] = {}
                 user_counts[user_id]["name"] = name
                 user_counts[user_id]["same_route_count"] = 1

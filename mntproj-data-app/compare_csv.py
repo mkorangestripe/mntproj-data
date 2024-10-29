@@ -25,7 +25,7 @@ import requests
 import yaml
 
 from common_functions import get_csv_file
-from constants import MNTPROJ_USER_IDS_FILE, USER_TICK_CSV_DIR, ALL_ROUTE_TICKS_FILE
+from constants import MNTPROJ_USER_IDS_FILE, USER_TICK_CSV_DIR, ROUTE_TICKS_CACHE_FILE
 from constants import LOG_DIR , LOG_FILE_COMPARE_CSV, LOG_FORMAT
 
 LOG_LEVEL = logging.INFO
@@ -102,10 +102,10 @@ if __name__ == "__main__":
         print("Checking for inconsistencies between the second user's tick list and each route's tick list.")
 
         try:
-            with open(ALL_ROUTE_TICKS_FILE, encoding='utf-8') as open_cached_route_file:
-                all_route_ticks = json.load(open_cached_route_file)
+            with open(ROUTE_TICKS_CACHE_FILE, encoding='utf-8') as open_cached_route_file:
+                route_ticks_cached_data = json.load(open_cached_route_file)
         except FileNotFoundError:
-            logging.error("%s not found, cannot complete check", ALL_ROUTE_TICKS_FILE)
+            logging.error("%s not found, cannot complete check", ROUTE_TICKS_CACHE_FILE)
             logging.info("Compare CSV finished for %s and %s", mntproj_user_name1, mntproj_user_name2)
             sys.exit(1)
 
@@ -117,10 +117,10 @@ if __name__ == "__main__":
 
         inconsistencies = {}
         for route_id in common_route_ids:
-            if route_id in all_route_ticks:
-                route_name = all_route_ticks[route_id]["route_name"]
-                user_name_get1 = all_route_ticks[route_id]["user_ticks"].get(MNTPROJ_USER_ID1)
-                user_name_get2 = all_route_ticks[route_id]["user_ticks"].get(MNTPROJ_USER_ID2)
+            if route_id in route_ticks_cached_data:
+                route_name = route_ticks_cached_data[route_id]["route_name"]
+                user_name_get1 = route_ticks_cached_data[route_id]["user_ticks"].get(MNTPROJ_USER_ID1)
+                user_name_get2 = route_ticks_cached_data[route_id]["user_ticks"].get(MNTPROJ_USER_ID2)
                 if user_name_get1 is None:
                     inconsistencies[route_id] = (route_name, mntproj_user_name1)
                 elif user_name_get2 is None:

@@ -16,8 +16,6 @@ class ScrapeMntProj:
     """Compare users in Mountain Project route tick lists"""
 
     def __init__(self) -> None:
-        self.all_route_ticks_json = {}
-        self.route_ticks_totals = {}
         self.users_all_routes = {}
 
     def get_route_ticks(self, route_id):
