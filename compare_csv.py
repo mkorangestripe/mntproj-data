@@ -101,8 +101,13 @@ if __name__ == "__main__":
             print()
         print("Checking for inconsistencies between the second user's tick list and each route's tick list.")
 
-        with open(ALL_ROUTE_TICKS_FILE, encoding='utf-8') as open_cached_route_file:
-            all_route_ticks = json.load(open_cached_route_file)
+        try:
+            with open(ALL_ROUTE_TICKS_FILE, encoding='utf-8') as open_cached_route_file:
+                all_route_ticks = json.load(open_cached_route_file)
+        except FileNotFoundError:
+            logging.error("%s not found, cannot complete check", ALL_ROUTE_TICKS_FILE)
+            logging.info("Compare CSV finished for %s and %s", mntproj_user_name1, mntproj_user_name2)
+            sys.exit(1)
 
         common_route_ids = []
         for common_route_url in common_route_urls:
