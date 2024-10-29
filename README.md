@@ -2,7 +2,7 @@
 
 Find other Mountain Project users with similar tick lists.
 
-![graph](static/mpda.svg)
+![graph](mntproj-data-app/static/mpda.svg)
 
 ### Run as an API
 
@@ -10,6 +10,11 @@ Activate virtual env:
 ```shell script
 pipenv shell                          # using pipenv
 conda activate envs/mntproj_py3.12.7  # using Anaconda
+```
+
+Change to the app directory:
+```shell script
+cd mntproj-data-app
 ```
 
 Start using Flask:
@@ -54,10 +59,6 @@ suzy-bishop: 000000002
 
 ### Setup
 
-```shell script
-cd mntproj-data
-```
-
 Use any of the following to install dependencies.
 
 * Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
@@ -77,4 +78,4 @@ pipenv install
 
 This calls a Mountain Project API, you may receive HTTP response status code 429 (Too Many Requests) based on the rate limiting.
 
-Compare two Mountain Project tick lists: [compare_csv.py](compare_csv.py)
+Compare two Mountain Project tick lists: [compare_csv.py](mntproj-data-app/compare_csv.py)

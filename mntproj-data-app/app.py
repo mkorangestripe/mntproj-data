@@ -3,6 +3,7 @@
 """Entry point for Mountain Project data analyzer"""
 
 import logging
+import os
 import sys
 from flask import Flask, render_template, request, redirect, url_for
 from constants import LOG_DIR , LOG_FILE_FLASK_APP, LOG_FORMAT
@@ -13,6 +14,11 @@ LOG_LEVEL = logging.INFO
 # LOG_LEVEL = logging.WARNING
 
 LOG_FILE = f"{LOG_DIR}/{LOG_FILE_FLASK_APP}"
+
+if os.path.isdir(LOG_DIR) is False:
+    print(LOG_DIR + " not found, logging to local logs directory")
+    os.makedirs("logs", exist_ok=True)
+    LOG_FILE = f"logs/{LOG_FILE_FLASK_APP}"
 
 logging.basicConfig(filename=LOG_FILE, level=LOG_LEVEL, format=LOG_FORMAT)
 logging.info("Starting Mountain Project Data Analyzer")
