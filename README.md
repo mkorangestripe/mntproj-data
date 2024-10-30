@@ -14,7 +14,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. Specified version of Python is required.
+* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. The specified version of Python is required.
 ```shell script
 pipenv install
 ```
@@ -72,7 +72,7 @@ suzy-bishop: 000000002
 Example usage:
 ```shell script
 python scrape_mntproj.py thomas-anderson
-python scrape_mntproj.py thomas-anderson 60  # use cached data if checked within last 60 min
+python scrape_mntproj.py thomas-anderson 60  # use cached data if checked within last 60min
 ```
 
 Options:  
