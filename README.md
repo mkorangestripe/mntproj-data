@@ -80,6 +80,17 @@ python scrape_mntproj.py thomas-anderson 60
 Options:  
 -n Try to use cached user's csv file
 
+### Logs
+
+The log location is set in [constants.py](mntproj-data-app/constants.py)
+
+Tail the log files to see progress while running:
+```shell script
+tail -f logs/app.log
+tail -f logs/compare_csv.log
+tail -f logs/scrape_mntproj.log
+```
+
 ### Notes
 
 This calls a Mountain Project API, you may receive HTTP response status code 429 (Too Many Requests) based on the rate limiting.
