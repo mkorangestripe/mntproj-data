@@ -8,24 +8,29 @@ Find other Mountain Project users with similar tick lists.
 
 Use any of the following to install dependencies.
 
-* Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
+* Create a virtual environment and install dependencies from [requirements.txt](requirements.txt). This will use your current version of Python.
 ```shell script
+python -m venv venv
 pip install -r requirements.txt
 ```
 
-* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present:
+* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. Specified version of Python is required.
 ```shell script
 pipenv install
 ```
 
-* Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
+* With Anaconda installed, create virtual environment, install dependencies in [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml), and install Python 3.12.7:
+```shell script
+conda env create -n mntproj_py3.12.7 -f mntproj_py3.12.7.yaml python=3.12.7
+```
 
 ### Run as an API
 
 Activate virtual env:
 ```shell script
-pipenv shell                          # using pipenv
-conda activate envs/mntproj_py3.12.7  # using Anaconda
+source venv/bin/activate         # using venv
+pipenv shell                     # using pipenv
+conda activate mntproj_py3.12.7  # using Anaconda
 ```
 
 Change to the app directory:
@@ -67,7 +72,7 @@ suzy-bishop: 000000002
 Example usage:
 ```shell script
 python scrape_mntproj.py thomas-anderson
-python scrape_mntproj.py thomas-anderson 60  # use cached routes newer than 60 min
+python scrape_mntproj.py thomas-anderson 60  # use cached data if checked within last 60 min
 ```
 
 Options:  
