@@ -4,6 +4,22 @@ Find other Mountain Project users with similar tick lists.
 
 ![graph](mntproj-data-app/static/mpda.svg)
 
+### Setup
+
+Use any of the following to install dependencies.
+
+* Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
+```shell script
+pip install -r requirements.txt
+```
+
+* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present:
+```shell script
+pipenv install
+```
+
+* Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
+
 ### Run as an API
 
 Activate virtual env:
@@ -42,6 +58,12 @@ The UID/name can be submitted on the page or with a query string.
 
 ### Run as a script
 
+Create mntproj_user_ids.yaml and add UID/names, example:
+```yaml
+thomas-anderson: 123456789
+suzy-bishop: 000000002
+```
+
 Example usage:
 ```shell script
 python scrape_mntproj.py thomas-anderson
@@ -50,29 +72,6 @@ python scrape_mntproj.py thomas-anderson 60  # use cached routes newer than 60 m
 
 Options:  
 -n Try to use cached user's csv file
-
-Create mntproj_user_ids.yaml and add UID/names, example:
-```yaml
-thomas-anderson: 123456789
-suzy-bishop: 000000002
-```
-
-### Setup
-
-Use any of the following to install dependencies.
-
-* Install dependencies from [requirements.txt](requirements.txt). Creating a virtual environment beforehand is recommended.
-```shell script
-pip install -r requirements.txt
-```
-
-* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present:
-```shell script
-pipenv install
-```
-
-* Anaconda can also be used to create a virtual environment and install dependencies using [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml)
-
 
 ### Notes
 
