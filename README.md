@@ -73,7 +73,7 @@ Example usage:
 ```shell script
 python scrape_mntproj.py thomas-anderson
 
-# Use cached data if checked within the last 60 min:
+# Use cached data for routes checked within the last 60 min:
 python scrape_mntproj.py thomas-anderson 60
 ```
 
