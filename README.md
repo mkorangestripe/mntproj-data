@@ -72,7 +72,7 @@ suzy-bishop: 000000002
 Example usage:
 ```shell script
 python scrape_mntproj.py thomas-anderson
-python scrape_mntproj.py thomas-anderson 60  # use cached data if checked within last 60min
+python scrape_mntproj.py thomas-anderson 60 # use cached data if checked within last 60min
 ```
 
 Options:  
