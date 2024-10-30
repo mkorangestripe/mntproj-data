@@ -67,8 +67,8 @@ class ScrapeMntProj:
         """Dump cached route data"""
         try:
             with open(self.route_ticks_cache_file, 'w', encoding='utf-8') as open_cached_data_file:
-                # json.dump(self.route_ticks_cached_data, open_cached_data_file, indent=4)  # use to make human readable
-                json.dump(self.route_ticks_cached_data, open_cached_data_file)
+                json.dump(self.route_ticks_cached_data, open_cached_data_file, indent=4)  # use to make human readable
+                # json.dump(self.route_ticks_cached_data, open_cached_data_file)  # use to save space
         except (FileNotFoundError, PermissionError) as err:
             logging.error(err)
             logging.error("Not saving new route data")
@@ -274,9 +274,9 @@ def start_scrape_mntproj(mp_uid, mp_name):
     logging.info("Printing users, shared route counts, and percentages")
     results = []
     try:
-        user_route_total = user_counts[str(mp_uid)]["same_route_count"]  # json cache file was loaded
+        user_route_total = user_counts[int(mp_uid)]["same_route_count"]  # empty object was created
     except KeyError:
-        user_route_total = user_counts[mp_uid]["same_route_count"]  # empty object was created
+        user_route_total = user_counts[str(mp_uid)]["same_route_count"]  # json cache file was loaded
     for user_i in range(len(sorted_user_list)):
         name, same_route_count = sorted_user_list[user_i]
         if user_i + 1 > SAME_ROUTE_MAX_LIMIT:
