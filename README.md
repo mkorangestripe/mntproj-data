@@ -14,15 +14,17 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. If installed, pyenv will prompt you to install the specified version of Python if not already.
+* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. If installed, [pyenv](https://github.com/mkorangestripe/linux/blob/master/linux-notes/python-management.md#pyenv) will prompt you to install the specified version of Python if not already.
 ```shell script
 pipenv install
 ```
 
-* With Anaconda installed, create virtual environment, install dependencies in [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml), and install Python 3.12.7:
+* With Anaconda installed, create virtual environment, install dependencies in [mntproj_py3.12.7.yaml](mntproj_py3.12.7.yaml), and install Python 3.12.7
 ```shell script
 conda env create -n mntproj_py3.12.7 -f mntproj_py3.12.7.yaml python=3.12.7
 ```
+
+See [Package management](#package-management) below for further details.
 
 ### Run as an API
 
@@ -108,7 +110,7 @@ Compare two Mountain Project tick lists with each other: [compare_csv.py](mntpro
 
 ### Package management
 
-On MacOS, use [Homebrew](https://brew.sh) to install anaconda, miniconda, pyenv, etc.
+On macOS, use [Homebrew](https://brew.sh) to install anaconda, miniconda, pyenv, etc.
 
 [Homebrew on macOS examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/package-management.md)
 
