@@ -14,7 +14,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. The specified version of Python is required.
+* Create virtual environment and install dependencies from [Pipfile](Pipfile), or [Pipfile.lock](Pipfile.lock) if present. If installed, pyenv will prompt you to install the specified version of Python if not already.
 ```shell script
 pipenv install
 ```
@@ -61,6 +61,15 @@ View in a browser running with Gunicorn:
 
 The UID/name can be submitted on the page or with a query string.
 
+If the port is already in use, check for previously started processes and kill the ppid, 49690 here:
+```shell script
+lsof -ni :8000
+
+ps -ef | grep 49690
+
+kill 49690
+```
+
 ### Run as a script
 
 Create mntproj_user_ids.yaml and add UID/names, example:
@@ -93,6 +102,14 @@ tail -f logs/scrape_mntproj.log
 
 ### Notes
 
-This calls a Mountain Project API, you may receive HTTP response status code 429 (Too Many Requests) based on the rate limiting.
+This calls a Mountain Project API, you may receive HTTP response status code 429 (Too Many Requests) based on the rate limiting. This is why the get requests are not done in parallel.
 
-Compare two Mountain Project tick lists: [compare_csv.py](mntproj-data-app/compare_csv.py)
+Compare two Mountain Project tick lists with each other: [compare_csv.py](mntproj-data-app/compare_csv.py)
+
+### Package management
+
+On MacOS, use [Homebrew](https://brew.sh) to install anaconda, miniconda, pyenv, etc.
+
+[Homebrew on macOS examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/package-management.md)
+
+[Python version and package management examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/python-management.md)
