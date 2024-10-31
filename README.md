@@ -113,6 +113,6 @@ Compare two Mountain Project tick lists with each other: [compare_csv.py](mntpro
 
 On macOS, use [Homebrew](https://brew.sh) to install anaconda, miniconda, pyenv, etc.
 
-[Homebrew on macOS examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/package-management.md)
+[Homebrew on macOS examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/package-management.md#homebrew-on-macos)
 
 [Python version and package management examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/python-management.md)
