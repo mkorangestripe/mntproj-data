@@ -11,6 +11,7 @@ Use any of the following to install dependencies.
 * Create a virtual environment and install dependencies from [requirements.txt](requirements.txt). This will use your current version of Python.
 ```shell script
 python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
