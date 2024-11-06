@@ -1,0 +1,12 @@
+.python-version
+
+__pycache__/
+*.py[cod]
+
+user_tick_csv/
+logs/
+
+route_ticks_cache.json
+mntproj_user_ids.yaml
+
+.DS_Store
