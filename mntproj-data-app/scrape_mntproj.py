@@ -18,6 +18,7 @@ import json
 import os
 import logging
 import sys
+import time
 from datetime import datetime, timedelta
 from json import JSONDecodeError
 
@@ -137,19 +138,36 @@ class ScrapeMntProj:
 
     def get_route_page(self, next_page_url):
         """Get an individual page of a route's tick list"""
+
+        max_retries = 5
+        retries = 0
+
         try:
             response = self.session.get(next_page_url, timeout=10)
         except requests.RequestException as err:
             logging.critical(err)
             sys.exit(1)
 
-        logging.debug(response.headers)
+        while response.status_code == 429 and retries < max_retries:
+            wait_time = 2 ** retries
+            logging.warning("Received HTTP 429, sleeping for %s seconds (retry %s)", wait_time, retries)
+            time.sleep(wait_time)
+            try:
+                response = self.session.get(next_page_url, timeout=10)
+            except requests.RequestException as err:
+                logging.critical(err)
+                sys.exit(1)
 
         if response.status_code == 200:
+            logging.debug(response.headers)
             return response
+        if response.status_code == 429:
+            logging.critical("Exceeded max retries due to HTTP 429.")
+        else:
+            logging.critical("HTTP status code: %s", response.status_code)
+            sys.exit(1)
 
-        logging.critical("HTTP status code: %s", response.status_code)
-        sys.exit(1)
+        return None
 
     def get_route_ticks(self, route_id):
         """Get all pages of a route's tick list from Mountain Project"""
