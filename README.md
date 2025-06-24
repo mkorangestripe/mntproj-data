@@ -107,11 +107,15 @@ tail -f logs/scrape_mntproj.log
 
 This calls a Mountain Project API, you may receive HTTP response status code 429 (Too Many Requests) based on the rate limiting. This is why the get requests are not done in parallel.
 
-Compare two Mountain Project tick lists with each other: [compare_csv.py](mntproj-data-app/compare_csv.py)
+You can use [compare_csv.py](mntproj-data-app/compare_csv.py) to compare two Mountain Project tick lists with each other.
 
-### Package management
+### Bugs
 
-On macOS, use [Homebrew](https://brew.sh) to install anaconda, miniconda, pyenv, etc.
+Ocassionally the percent for the user being analyzed will be well over 100%. This should always be exactly 100%.
+
+### Python versions
+
+On macOS, you can use [Homebrew](https://brew.sh) to install anaconda, miniconda, or pyenv and inturn various version of Python.
 
 [Homebrew on macOS examples](https://github.com/mkorangestripe/linux/blob/master/linux-notes/package-management.md#homebrew-on-macos)
 
