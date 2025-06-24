@@ -11,8 +11,6 @@ pyyaml = "*"
 requests = "*"
 
 [dev-packages]
-pylint = "*"
 
 [requires]
 python_version = "3.12"
-python_full_version = "3.12.7"
