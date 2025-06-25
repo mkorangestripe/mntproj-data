@@ -111,7 +111,11 @@ You can use [compare_csv.py](mntproj-data-app/compare_csv.py) to compare two Mou
 
 ### Bugs
 
-Ocassionally the percent for the user being analyzed will be well over 100%. This should always be exactly 100%.
+Ocassionally the percent for the user being analyzed will be over 100%. This should only ever be 100%. Just run it again with the options to use cached data and tick list.
+
+```shell script
+python scrape_mntproj.py thoman-anderson 60 -n
+```
 
 ### Python versions
 
